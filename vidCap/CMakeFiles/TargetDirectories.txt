@@ -1,0 +1,1 @@
+/home/ee443/Project/vidCap/CMakeFiles/vidCap.dir
