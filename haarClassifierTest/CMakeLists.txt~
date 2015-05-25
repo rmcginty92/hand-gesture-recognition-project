@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 2.8)
+project( qt_test2 )
+find_package( OpenCV REQUIRED )
+set(INCLUDE_DIR "usr/include/opencv2")
+include_directories (${INCLUDE_DIR})
+add_executable( test_vid main.cpp )
+target_link_libraries( test_vid ${OpenCV_LIBS} )
