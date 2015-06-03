@@ -1,7 +1,8 @@
 #include "board.h"
 #include <QMessageBox>
-#define BOARD_SIZE 400//ori:200
-#define UNIT_STEP 10 ///ori:10
+#define BOARD_SIZE 400 //ori:200
+#define UNIT_STEP 10 //ori:10
+#define GESTURE_FRAME_THRETHOLD 2 //# of frames for single gesture command to kick in
 
 board::board(QWidget *parent)
 {
@@ -44,9 +45,17 @@ void board::paintEvent(QPaintEvent *event){
     qp.drawRect(QRect(0,0,BOARD_SIZE,BOARD_SIZE));
     //draw snake
     if(isStarted==true){
-        //qp.drawRect(QRect(fx,fy,mv,mv));
-        qp.fillRect(fx,fy,mv,mv, QColor(255,0,0));
-        for(int i=0;i<qvtail.size();i++)
+        // draw the fruite
+//        qp.fillRect(fx,fy,mv,mv, QColor(255,0,0));
+        qp.setBrush(QBrush(Qt::red));
+        qp.drawEllipse(QRect(fx,fy,mv,mv));
+
+        // draw the snake
+        int i = 0;
+//        qp.setBrush(QBrush(Qt::blue));
+//        qp.drawRect(QRect(qvtail[i][0],qvtail[i][1],mv,mv));
+        qp.setBrush(QBrush(Qt::green));
+        for(i=1;i<qvtail.size();i++)
             qp.drawRect(QRect(qvtail[i][0],qvtail[i][1],mv,mv));
     }
 }
@@ -211,7 +220,7 @@ void board::setCommand(int com){
         g_count += 1;
     }
 
-    if(g_count == 2){
+    if(g_count == GESTURE_FRAME_THRETHOLD){
         stepCommand(g_command);
         g_count = 0;
 

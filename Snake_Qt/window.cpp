@@ -24,17 +24,13 @@ window::window(QWidget *parent)
     qpbhs = new QPushButton("High Scores",this);
     qvb = new QVBoxLayout;
     qhb = new QHBoxLayout;
-    l1 = new QLCDNumber(this);
+//    l1 = new QLCDNumber(this);
     l2 = new QLCDNumber(this);
-    l3 = new QLabel("Level:",this);
+//    l3 = new QLabel("Level:",this);
     l4 = new QLabel("Score:",this);
     this->setFixedSize(WIN_MAX_WIDTH, WIN_MAX_HEIGHT);
 
     fr->setFixedSize(BOARD_LIMIT,BOARD_LIMIT);
-//    fr->setMinimumSize(BOARD_SIZE,BOARD_SIZE);
-//    fr->setMaximumSize(BOARD_SIZE,BOARD_SIZE);
-//    qpbstart->setMinimumWidth(SIDEBAR_WIDTH);
-//    qpbstart->setMaximumWidth(SIDEBAR_WIDTH);
     qpbstart->setFixedHeight(SIDEBAR_HEIGHT);
     qpbstart->setFixedWidth(SIDEBAR_WIDTH);
     qpbstart->setStyleSheet("background-color: yellow;" \
@@ -44,31 +40,35 @@ window::window(QWidget *parent)
                             "border-radius: 10px;" \
                             "border-color: grey");
     qpbhs->setFixedWidth(SIDEBAR_WIDTH);
-    l1->setFixedWidth(SIDEBAR_WIDTH);
+//    l1->setFixedWidth(SIDEBAR_WIDTH);
     l2->setFixedWidth(SIDEBAR_WIDTH);
-    l3->setFixedWidth(SIDEBAR_WIDTH);
-    l3->setFixedHeight(SIDEBAR_HEIGHT/2);
-    l3->setStyleSheet("font: 16px");
+//    l3->setFixedWidth(SIDEBAR_WIDTH);
+//    l3->setFixedHeight(SIDEBAR_HEIGHT/2);
+//    l3->setStyleSheet("font: 16px");
     l4->setFixedWidth(SIDEBAR_WIDTH);
     l4->setFixedHeight(SIDEBAR_HEIGHT/2);
     l4->setStyleSheet("font: 16px");
     qvb->addWidget(qpbstart);
     qvb->addWidget(qpbhs);
-    qvb->addWidget(l3);
-    qvb->addWidget(l1);
+//    qvb->addWidget(l3);
+//    qvb->addWidget(l1);
     qvb->addWidget(l4);
     qvb->addWidget(l2);
     qhb->addWidget(fr);
+
+    // add gesture cmmand icons
+    QPixmap *icon = new QPixmap(":/icons/dir_icon.png");
+    QLabel *iLabel = new QLabel("Up", this);
+    iLabel->setPixmap(*icon);
+    qvb->addWidget(iLabel);
     qhb->addLayout(qvb);
 
-
+    // add live cam display box
     lT = new QLabel("Test",this);
     lT->setFixedSize(640,480);
     QVBoxLayout *vbT = new QVBoxLayout;
     vbT->addWidget(lT);
     qhb->addLayout(vbT);
-
-
 
     this->setLayout(qhb);
 
@@ -129,6 +129,7 @@ void window::display(){
     QImage qInput((uchar*)g_input.data,g_input.cols,g_input.rows,g_input.step,QImage::Format_RGB888);
     lT->setPixmap(QPixmap::fromImage(qInput));
 
+    //Make 1 movement based on valid gesture command
     if(g_handSeg->getCommand() > -1 && g_handSeg->getCommand() < 5){
         fr->setCommand(g_handSeg->getCommand());
     }
