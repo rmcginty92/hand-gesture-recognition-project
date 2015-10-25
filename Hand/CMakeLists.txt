@@ -1,7 +1,0 @@
-cmake_minimum_required(VERSION 2.8)
-project( Hand )
-find_package( OpenCV REQUIRED )
-set(INCLUDE_DIR "usr/include/opencv2")
-include_directories (${INCLUDE_DIR})
-add_executable( main main.cpp )
-target_link_libraries( main ${OpenCV_LIBS} )
